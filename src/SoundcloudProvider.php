@@ -23,21 +23,11 @@ class SoundcloudProvider extends ServiceProvider
     {
         $this->app->singleton('Soundcloud', function($app)
         {
-            $client     = $app['config']['soundcloud']['clientID'];
-            $secret     = $app['config']['soundcloud']['clientSecret'];
-            $callback   = $app['config']['soundcloud']['callbackUrl'];
+            $client     = $app['config']->get('services.soundcloud.client_id');
+            $secret     = $app['config']->get('services.soundcloud.client_secret');
+            $callback   = $app['config']->get('services.soundcloud.callback_url');
 
             return new SoundcloudFacade($client, $secret, $callback);
         });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['Njasm\Soundcloud\Soundcloud', 'Njasm\Soundcloud\SoundcloudFacade'];
     }
 }
