@@ -1,0 +1,27 @@
+{
+  "name": "njasm/laravel5-soundcloud",
+  "description": "Soundcloud API Service Provider For Laravel 5",
+  "homepage": "http://github.com/njasm/laravel5-soundcloud",
+  "license": "MIT",
+  "keywords": ["laravel", "soundcloud", "api", "webservices", "webservice"],
+  "authors": [
+    {
+      "name": "Nelson João Morais",
+      "email": "njmorais@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/njasm/laravel5-soundcloud/issues",
+    "source": "https://github.com/njasm/laravel5-soundcloud"
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "njasm/soundcloud": "~2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Njasm\\Laravel": "src/"
+    }
+  }
+}
