@@ -3,6 +3,7 @@
 namespace Njasm\Laravel\Soundcloud;
 
 use Illuminate\Support\ServiceProvider;
+use Njasm\Soundcloud\SoundcloudFacade;
 
 class SoundcloudProvider extends ServiceProvider
 {
@@ -20,9 +21,13 @@ class SoundcloudProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('Riak\Contracts\Connection', function($app)
+        $this->app->singleton('Soundcloud', function($app)
         {
-            return new Connection($app['config']['riak']);
+            $client     = $app['config']['soundcloud']['clientID'];
+            $secret     = $app['config']['soundcloud']['clientSecret'];
+            $callback   = $app['config']['soundcloud']['callbackUrl'];
+
+            return new SoundcloudFacade($client, $secret, $callback);
         });
     }
 
@@ -33,46 +38,6 @@ class SoundcloudProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['Riak\Contracts\Connection'];
+        return ['Njasm\Soundcloud\Soundcloud', 'Njasm\Soundcloud\SoundcloudFacade'];
     }
-}
-
-
-<?php namespace App\Providers;
-
-use Riak\Connection;
-
-
-class RiakServiceProvider extends ServiceProvider {
-
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->app->singleton('Riak\Contracts\Connection', function($app)
-        {
-            return new Connection($app['config']['riak']);
-        });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['Riak\Contracts\Connection'];
-    }
-
 }
