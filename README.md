@@ -5,7 +5,7 @@ Soundcloud API Service Provider For Laravel 5
 ### Installation
 The package can be installed via Composer by requiring the ``"njasm/laravel5-soundcloud": "dev-master"`` package in your project's composer.json.
 
-```
+```json
 {
     "require": {
         // ...
@@ -17,7 +17,7 @@ The package can be installed via Composer by requiring the ``"njasm/laravel5-sou
 
 Next you need to add the service provider to ``app/config/app.php``.
 
-```
+```php
 'providers' => array(
     // ...
     'Njasm\Laravel\Soundcloud\SoundcloudProvider',
