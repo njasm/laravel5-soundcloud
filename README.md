@@ -8,7 +8,6 @@ The package can be installed via Composer by requiring the ``"njasm/laravel5-sou
 ```json
 {
     "require": {
-        // ...
         "njasm/laravel5-soundcloud": "dev-master"
     },
     "minimum-stability": "dev"
