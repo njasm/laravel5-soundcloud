@@ -1,14 +1,14 @@
-Laravel 5 - Soundcloud Api Service Provider
-===============
+## Laravel 5 - Soundcloud Api Service Provider
+
 Soundcloud API Service Provider For Laravel 5
 
-## Installation
+### Installation
 The package can be installed via Composer by requiring the ``"njasm/laravel5-soundcloud": "dev-master"`` package in your project's composer.json.
 
 ```
 {
     "require": {
-        "laravel/framework": "~5.0*",
+        // ...
         "njasm/laravel5-soundcloud": "dev-master"
     },
     "minimum-stability": "dev"
@@ -24,26 +24,26 @@ Next you need to add the service provider to ``app/config/app.php``.
 )
 ```
 
-## Add Soundcloud provider to services
+### Add Soundcloud settings to your services config
 
-Laravel 5 has a new file that contains all third party services (``app/config/services.php``).
-Add your client_id and client_secret and callback_url.
+Laravel 5 has a new file that contains all third party services ``app/config/services.php``.
+Add your ``client_id`` and ``client_secret`` and ``callback_url``.
 
 ```php
-    // ...
-	'soundcloud' => [
-		'client_id' => 'CLIENT_ID_HERE',
-		'client_secret' => 'CLIENT_SECRET_HERE',
-		'callback_url' => 'CALLBACK_URL_HERE
-	],
+// ...
+'soundcloud' => [
+	'client_id' => 'CLIENT_ID_HERE',
+	'client_secret' => 'CLIENT_SECRET_HERE',
+	'callback_url' => 'CALLBACK_URL_HERE
+],
 ```
 
-## Usage
+### Usage
 
 Access your Soundcloud object by requesting it to your Application
 
 ```php
-	$soundcloud = $app->make('Soundcloud');
-	echo $soundcloud->getAuthUrl();
+$soundcloud = $app->make('Soundcloud');
+echo $soundcloud->getAuthUrl();
 ```
 
