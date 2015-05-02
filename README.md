@@ -33,7 +33,7 @@ Add your ``client_id`` and ``client_secret`` and ``callback_url``.
 'soundcloud' => [
 	'client_id' => 'CLIENT_ID_HERE',
 	'client_secret' => 'CLIENT_SECRET_HERE',
-	'callback_url' => 'CALLBACK_URL_HERE
+	'callback_url' => 'CALLBACK_URL_HERE',
 ],
 ```
 
