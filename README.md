@@ -42,7 +42,7 @@ Add your ``client_id`` and ``client_secret`` and ``callback_url``.
 Access your Soundcloud object by requesting it to your Application
 
 ```php
-$soundcloud = $app->make('Soundcloud');
+$soundcloud = $this->app->make('Soundcloud');
 echo $soundcloud->getAuthUrl();
 ```
 
