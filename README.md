@@ -14,35 +14,104 @@ The package can be installed via Composer by requiring the ``"njasm/laravel5-sou
 }
 ```
 
-Next you need to add the service provider to ``app/config/app.php``.
+Next you need to add the service provider to ``config/app.php``.
 
 ```php
-'providers' => array(
+'providers' => [
     // ...
-    'Njasm\Laravel\Soundcloud\SoundcloudProvider',
-)
+    Njasm\Laravel\Soundcloud\SoundcloudProvider::class,
+],
+```
+
+Additionally, if you wish to use the Facade, you may register an alias for it in ``config/app.php``:
+```php
+'aliases' => [
+    // ...
+    'Soundcloud' => Njasm\Laravel\Soundcloud\Facades\Soundcloud::class,
+],
+```
+
+We've also got a dedicated config file, which can be published by running the following command:
+```
+php artisan vendor:publish --provider="Njasm\Laravel\Soundcloud\SoundcloudProvider"
 ```
 
 ### Add Soundcloud settings to your services config
 
-Laravel 5 has a new file that contains all third party services ``app/config/services.php``.
-Add your ``client_id`` and ``client_secret`` and ``callback_url``.
+Since you most-likely don't want your `client_id`, `client_secret`, `username` or `password` to be on your repository (for security concerns), put them in the `.env` file:
+```
+SOUNDCLOUD_CLIENT_ID=your_client_id
+SOUNDCLOUD_CLIENT_SECRET=your_client_secret
+SOUNDCLOUD_CALLBACK_URL=your_callback_url
+SOUNDCLOUD_USERNAME=your_username
+SOUNDCLOUD_PASSWORD=your_password
+```
+
+and reference them in `config/services.php` as such:
 
 ```php
 // ...
 'soundcloud' => [
-	'client_id' => 'CLIENT_ID_HERE',
-	'client_secret' => 'CLIENT_SECRET_HERE',
-	'callback_url' => 'CALLBACK_URL_HERE',
+    'client_id' => env('SOUNDCLOUD_CLIENT_ID'),
+    'client_secret' => env('SOUNDCLOUD_CLIENT_SECRET'),
+    'callback_url' => env('SOUNDCLOUD_CALLBACK_URL'),
 ],
 ```
 
+The `username` and `password` are available through the dedicated config file.
+
 ### Usage
 
-Access your Soundcloud object by requesting it to your Application
+You can access the Soundcloud object through a number of ways:
+
+**Using dependency injection**  
+
+In this case, we'll make use of Laravel's IoC container to automatically resolve the binding:
+```php
+namespace App\Http\Controllers;
+
+use Njasm\Soundcloud\SoundcloudFacade;
+
+class HomeController extends Controller
+{
+    public function index(SoundcloudFacade $soundcloud)
+    {
+        echo $soundcloud->getAuthUrl();
+    }
+}
+```
+
+
+**Using the facade**
 
 ```php
+namespace App\Http\Controllers;
+
+use Soundcloud;
+
+class HomeController extends Controller
+{
+    public function index()
+    {
+        echo Soundcloud::getAuthUrl();
+    }
+}
+```
+
+
+**Manually resolving the binding out of the container**
+
+You can either use the full namespace to the `SoundcloudFacade` to reference the binding in the IoC:
+```php
+$soundcloud = $this->app->make(\Njasm\Soundcloud\SoundcloudFacade::class);
+$soundcloud = App::make(\Njasm\Soundcloud\SoundcloudFacade::class);
+$soundcloud = app(\Njasm\Soundcloud\SoundcloudFacade::class);
+```
+
+or use the shorthand alias:
+```php
 $soundcloud = $this->app->make('Soundcloud');
-echo $soundcloud->getAuthUrl();
+$soundcloud = App::make('Soundcloud');
+$soundcloud = app('Soundcloud');
 ```
 
