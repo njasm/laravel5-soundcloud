@@ -8,11 +8,21 @@ use Njasm\Soundcloud\SoundcloudFacade;
 class SoundcloudProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
+     * @var string
      */
-    protected $defer = true;
+    private $originalConfigPath = __DIR__ . '/../config/soundcloud.php';
+
+    /**
+     * Perform post-registration booting of services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->publishes([
+            $this->originalConfigPath => config_path('soundcloud.php'),
+        ], 'config');
+    }
 
     /**
      * Register the service provider.
@@ -21,23 +31,34 @@ class SoundcloudProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('Soundcloud', function($app)
-        {
-            $client     = $app['config']->get('services.soundcloud.client_id');
-            $secret     = $app['config']->get('services.soundcloud.client_secret');
-            $callback   = $app['config']->get('services.soundcloud.callback_url');
+        $this->mergeConfigFrom($this->originalConfigPath, 'soundcloud');
 
-            return new SoundcloudFacade($client, $secret, $callback);
-        });
+        $apiConfig = $this->app['config']->get('services.soundcloud');
+        $config = $this->app['config']->get('soundcloud');
+
+        $this->registerSoundcloudFacade($apiConfig, $config);
     }
 
     /**
-     * Get the services provided by the provider.
-     *
-     * @return array
+     * @param array $apiConfig
+     * @param array $config
      */
-    public function provides()
+    private function registerSoundcloudFacade(array $apiConfig, array $config)
     {
-        return ['Soundcloud'];
+        $this->app->singleton(SoundcloudFacade::class, function() use ($apiConfig, $config) {
+            $soundcloud = new SoundcloudFacade(
+                $apiConfig['client_id'],
+                $apiConfig['client_secret'],
+                $apiConfig['callback_url']
+            );
+
+            if ($config['auto_connect']) {
+                $soundcloud->userCredentials($config['username'], $config['password']);
+            }
+
+            return $soundcloud;
+        });
+
+        $this->app->alias(SoundcloudFacade::class, 'Soundcloud');
     }
 }
