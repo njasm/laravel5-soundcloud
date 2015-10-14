@@ -8,11 +8,6 @@ use Njasm\Soundcloud\SoundcloudFacade;
 class SoundcloudProvider extends ServiceProvider
 {
     /**
-     * @var string
-     */
-    private $originalConfigPath = __DIR__ . '/../config/soundcloud.php';
-
-    /**
      * Perform post-registration booting of services.
      *
      * @return void
@@ -20,7 +15,7 @@ class SoundcloudProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            $this->originalConfigPath => config_path('soundcloud.php'),
+            $this->originalConfigPath() => config_path('soundcloud.php'),
         ], 'config');
     }
 
@@ -31,7 +26,7 @@ class SoundcloudProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom($this->originalConfigPath, 'soundcloud');
+        $this->mergeConfigFrom($this->originalConfigPath(), 'soundcloud');
 
         $apiConfig = $this->app['config']->get('services.soundcloud');
         $config = $this->app['config']->get('soundcloud');
@@ -60,5 +55,13 @@ class SoundcloudProvider extends ServiceProvider
         });
 
         $this->app->alias(SoundcloudFacade::class, 'Soundcloud');
+    }
+
+    /**
+     * @return string
+     */
+    private function originalConfigPath()
+    {
+        return __DIR__ . '/../config/soundcloud.php';
     }
 }
