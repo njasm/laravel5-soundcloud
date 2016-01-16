@@ -2,6 +2,11 @@
 
 Soundcloud API Service Provider For Laravel 5
 
+- [Installation](#installation)
+- [SoundCloud Credentials](#soundcloud-credentials)
+- [Configuration](#configuration)
+- [Usage](#usage)
+
 ### Installation
 The package can be installed via Composer by requiring the ``"njasm/laravel5-soundcloud": "dev-master"`` package in your project's composer.json.
 
@@ -36,7 +41,7 @@ We've also got a dedicated config file, which can be published by running the fo
 php artisan vendor:publish --provider="Njasm\Laravel\Soundcloud\SoundcloudProvider"
 ```
 
-### Add Soundcloud settings to your services config
+### SoundCloud Credentials
 
 Since you most-likely don't want your `client_id`, `client_secret`, `username` or `password` to be on your repository (for security concerns), put them in the `.env` file:
 ```
@@ -45,6 +50,7 @@ SOUNDCLOUD_CLIENT_SECRET=your_client_secret
 SOUNDCLOUD_CALLBACK_URL=your_callback_url
 SOUNDCLOUD_USERNAME=your_username
 SOUNDCLOUD_PASSWORD=your_password
+SOUNDCLOUD_AUTO_CONNECT=false
 ```
 
 and reference them in `config/services.php` as such:
@@ -58,7 +64,11 @@ and reference them in `config/services.php` as such:
 ],
 ```
 
-The `username` and `password` are available through the dedicated config file.
+### Configuration
+
+Besides the ones in `services.php` (which now holds all of your SoundCloud credentials), a few more options are available in the dedicated config file:
+- `username` and `password`, both used for connecting to the SoundCloud API as an actual user. These should be defined in the `.env` file.
+- `auto_connect`: When set to true, the user credentials above will be used to connect to SoundCloud automatically, without you having the call the `userCredentials` method manually. This may be useful to quickly access data of the authenticated user. Note that, since this option may vary depending of the app evironment (e.g. when running unit tests), it should be defined in the `.env` file as well.
 
 ### Usage
 

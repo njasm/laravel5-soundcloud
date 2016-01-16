@@ -36,6 +36,6 @@ return [
     |
     */
 
-    'auto_connect' => false,
+    'auto_connect' => env('SOUNDCLOUD_AUTO_CONNECT', false),
 
 ];

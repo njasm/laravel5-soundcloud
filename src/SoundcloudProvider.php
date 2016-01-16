@@ -28,8 +28,9 @@ class SoundcloudProvider extends ServiceProvider
     {
         $this->mergeConfigFrom($this->originalConfigPath(), 'soundcloud');
 
-        $apiConfig = $this->app['config']->get('services.soundcloud');
-        $config = $this->app['config']->get('soundcloud');
+        $config = $this->app['config'];
+        $apiConfig = $config['services']['soundcloud'];
+        $config = $config['soundcloud'];
 
         $this->registerSoundcloudFacade($apiConfig, $config);
     }
