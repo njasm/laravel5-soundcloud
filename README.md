@@ -44,7 +44,7 @@ php artisan vendor:publish --provider="Njasm\Laravel\Soundcloud\SoundcloudProvid
 ### SoundCloud Credentials
 
 Since you most-likely don't want your `client_id`, `client_secret`, `username` or `password` to be on your repository (for security concerns), put them in the `.env` file:
-```
+```ini
 SOUNDCLOUD_CLIENT_ID=your_client_id
 SOUNDCLOUD_CLIENT_SECRET=your_client_secret
 SOUNDCLOUD_CALLBACK_URL=your_callback_url
