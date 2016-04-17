@@ -1,3 +1,6 @@
+[![Total Downloads](https://poser.pugx.org/njasm/laravel5-soundcloud/downloads.png)](https://packagist.org/packages/njasm/laravel5-soundcloud)
+[![License](https://poser.pugx.org/njasm/laravel5-soundcloud/license.png)](https://packagist.org/packages/njasm/laravel5-soundcloud)
+
 ## Laravel 5 - Soundcloud Api Service Provider
 
 Soundcloud API Service Provider For Laravel 5
