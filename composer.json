@@ -18,7 +18,7 @@
   "minimum-stability": "dev",
   "require": {
     "njasm/soundcloud": "~2.0",
-    "illuminate/support": "5.1.*|5.2.*"
+    "illuminate/support": "5.1.*|5.2.*|5.3.*"
   },
   "autoload": {
     "psr-4": {
